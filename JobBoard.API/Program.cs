@@ -16,6 +16,9 @@ namespace JobBoard.API
             builder.Services.AddDbContext<JobBoardContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddScoped<Repositories.RolRepository>();
+            builder.Services.AddScoped<Services.RolService>();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

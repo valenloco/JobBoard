@@ -1,5 +1,7 @@
 using JobBoard.API.Data;
 using Microsoft.EntityFrameworkCore;
+using JobBoard.API.Repositories;
+using JobBoard.API.Services;
 
 namespace JobBoard.API
 {
@@ -16,8 +18,11 @@ namespace JobBoard.API
             builder.Services.AddDbContext<JobBoardContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<Repositories.RolRepository>();
-            builder.Services.AddScoped<Services.RolService>();
+            builder.Services.AddScoped<RolRepository>();
+            builder.Services.AddScoped<RolService>();
+
+            builder.Services.AddScoped<UsuarioRepository>();
+            builder.Services.AddScoped<UsuarioService>();
 
             var app = builder.Build();
 

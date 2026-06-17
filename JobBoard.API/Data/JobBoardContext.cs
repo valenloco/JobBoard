@@ -7,7 +7,18 @@ namespace JobBoard.API.Data
         public JobBoardContext(DbContextOptions<JobBoardContext> options) : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Usuario>()
+                .HasOne(u => u.Rol)
+                .WithMany()
+                .HasForeignKey(u => u.IdRol);
 
+            modelBuilder.Entity<Usuario>()
+                .HasOne(u => u.Empresa)
+                .WithMany()
+                .HasForeignKey(u => u.IdEmpresa);
+        }
         public DbSet<Rol> Roles { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Empresa> Empresas { get; set; }

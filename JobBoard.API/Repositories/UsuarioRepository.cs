@@ -63,5 +63,13 @@ namespace JobBoard.API.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        public async Task<Usuario?> ObtenerPorCorreo(string correo)
+        {
+            return await _context.Usuarios
+                .Include(u => u.Rol)
+                .Include(u => u.Empresa)
+                .FirstOrDefaultAsync(u => u.Correo == correo);
+        }
     }
 }
+    

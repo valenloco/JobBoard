@@ -2,6 +2,9 @@ using JobBoard.API.Data;
 using Microsoft.EntityFrameworkCore;
 using JobBoard.API.Repositories;
 using JobBoard.API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace JobBoard.API
 {
@@ -23,6 +26,23 @@ namespace JobBoard.API
 
             builder.Services.AddScoped<UsuarioRepository>();
             builder.Services.AddScoped<UsuarioService>();
+
+            builder.Services.AddScoped<AuthService>();
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+                };
+            });
 
             var app = builder.Build();
 

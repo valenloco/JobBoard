@@ -1,14 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using JobBoard.API.Services;
-using JobBoard.API.DTOs;
+﻿using JobBoard.API.DTOs;
 using JobBoard.API.Entities;
+using JobBoard.API.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JobBoard.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UsuarioController : ControllerBase
     {
+
         private readonly UsuarioService _usuarioService;
         public UsuarioController(UsuarioService usuarioService)
         {
